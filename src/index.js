@@ -21,7 +21,7 @@ var fs = require('fs');
 var barcode = {
     settings: {
         path: "barcode",
-        toFile:true,
+        // toFile:true,
         width:100,
         barWidth: 1,
         barHeight: 50,
@@ -992,11 +992,7 @@ var barcode = {
             var fontSize = barcode.intval(settings.fontSize);
             height += barcode.intval(settings.marginHRI) + fontSize;
         }
-        var svg ='<g>';
-        if(settings.toFile){
-            // svg header
-            svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ' + width + ' ' + height + '" >';
-        }
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ' + width + ' ' + height + '" >';
         if(settings.bgColor !== 'transparent'){
             // background
             svg += '<rect width="' + width + '" height="' + height + '" x="0" y="0" fill="' + settings.bgColor + '" />';
@@ -1035,14 +1031,8 @@ var barcode = {
             svg += '<text y="' + (height - Math.floor(fontSize / 2)) + '" text-anchor="middle" style="font-family: Arial; font-size: ' + fontSize + 'px;" fill="' + settings.color + '">' + hri + '</text>';
             svg += '</g>';
         }
-        // svg footer
-        if(settings.toFile) {
-            svg += '</svg>';
-            return this.write(settings, svg, 'svg', callback);
-        }else{
-            svg += '</g>';
-            return svg;
-        }
+        svg += '</svg>';
+        return svg;
     },
     // svg 1D barcode renderer
     digitToSvg: function (settings, digit, hri, callback) {
